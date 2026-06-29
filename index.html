@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Как повысить самооценку — Практический гайд</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; background: #0F0A1E; color: #1A1A2E; }
+
+  /* STICKY TIMER BAR */
+  .timer-bar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 999;
+    background: linear-gradient(90deg, #D97706, #F59E0B);
+    color: white; text-align: center;
+    padding: 10px 20px;
+    font-size: 14px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center; gap: 12px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+  }
+  .timer-bar span { font-size: 13px; font-weight: 400; opacity: 0.9; }
+  #countdown { font-size: 18px; font-weight: 800; background: rgba(0,0,0,0.2); padding: 2px 10px; border-radius: 6px; letter-spacing: 1px; }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, #3B1FA0 0%, #6C3FC5 50%, #8B5CF6 100%);
+    padding: 100px 20px 60px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before { content: ''; position: absolute; top: -80px; right: -80px; width: 300px; height: 300px; background: rgba(255,255,255,0.05); border-radius: 50%; }
+  .hero::after { content: ''; position: absolute; bottom: -60px; left: -60px; width: 200px; height: 200px; background: rgba(255,255,255,0.04); border-radius: 50%; }
+
+  .badge {
+    display: inline-block;
+    background: rgba(245,158,11,0.2); border: 1px solid #F59E0B;
+    color: #FCD34D; font-size: 13px; padding: 6px 18px;
+    border-radius: 20px; margin-bottom: 24px; font-weight: 600; letter-spacing: 0.5px;
+  }
+  .hero h1 {
+    font-size: clamp(28px, 6vw, 52px); color: white; font-weight: 800;
+    line-height: 1.15; margin-bottom: 20px; max-width: 720px; margin-left: auto; margin-right: auto;
+  }
+  .hero h1 span { color: #FCD34D; }
+  .hero-sub {
+    font-size: clamp(15px, 2.5vw, 19px); color: rgba(255,255,255,0.85);
+    max-width: 580px; margin: 0 auto 36px; line-height: 1.7;
+  }
+
+  .book-mockup {
+    width: 200px; height: 260px;
+    background: linear-gradient(135deg, #4C1D95, #7C3AED);
+    border-radius: 8px 16px 16px 8px;
+    margin: 0 auto 36px;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: -8px 8px 24px rgba(0,0,0,0.4), 4px 0 0 #2D1B69;
+    position: relative; color: white; text-align: center; padding: 20px;
+  }
+  .book-mockup::before {
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 12px;
+    background: linear-gradient(to right, #2D1B69, #4C1D95); border-radius: 8px 0 0 8px;
+  }
+  .book-title { font-size: 16px; font-weight: 800; line-height: 1.3; }
+  .book-sub { font-size: 11px; color: rgba(255,255,255,0.7); margin-top: 8px; }
+  .book-star { font-size: 28px; margin-bottom: 10px; }
+
+  /* PRICE BLOCK */
+  .price-block {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 20px;
+    padding: 24px 32px;
+    display: inline-block;
+    margin-bottom: 28px;
+  }
+  .price-old { color: rgba(255,255,255,0.5); font-size: 16px; text-decoration: line-through; margin-bottom: 4px; }
+  .price-new { color: white; font-size: 42px; font-weight: 800; line-height: 1; }
+  .price-new sup { font-size: 20px; vertical-align: top; margin-top: 6px; display: inline-block; }
+  .price-discount {
+    display: inline-block;
+    background: #DC2626; color: white;
+    font-size: 13px; font-weight: 700;
+    padding: 3px 10px; border-radius: 20px;
+    margin-left: 10px; vertical-align: middle;
+  }
+  .price-why { color: rgba(255,255,255,0.65); font-size: 13px; margin-top: 6px; }
+
+  .cta-btn {
+    display: inline-block;
+    background: linear-gradient(135deg, #F59E0B, #D97706);
+    color: white; font-size: 18px; font-weight: 700;
+    padding: 18px 48px; border-radius: 50px;
+    text-decoration: none;
+    box-shadow: 0 8px 24px rgba(245,158,11,0.4);
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer; border: none;
+  }
+  .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(245,158,11,0.5); }
+  .cta-sub { color: rgba(255,255,255,0.6); font-size: 13px; margin-top: 10px; }
+
+  /* SOCIAL PROOF BAR */
+  .social-bar {
+    background: #0F0A1E;
+    padding: 18px 20px;
+    text-align: center;
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 28px;
+  }
+  .social-item { color: rgba(255,255,255,0.75); font-size: 14px; display: flex; align-items: center; gap: 7px; }
+  .social-item strong { color: white; font-size: 18px; }
+
+  /* SECTIONS */
+  .section { padding: 64px 20px; }
+  .container { max-width: 760px; margin: 0 auto; }
+  .section-white { background: white; }
+  .section-light { background: #F8F5FF; }
+  .section-dark { background: #1A0A3E; color: white; }
+
+  h2 { font-size: clamp(22px, 4vw, 36px); font-weight: 800; margin-bottom: 16px; line-height: 1.25; }
+  h2.center { text-align: center; }
+  .subtitle { text-align: center; color: #6B7280; font-size: 17px; line-height: 1.6; margin-bottom: 40px; }
+
+  /* HOOK: BEFORE/AFTER */
+  .before-after { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 10px; }
+  @media(max-width:540px){ .before-after { grid-template-columns: 1fr; } }
+  .ba-card { border-radius: 16px; padding: 24px 20px; }
+  .ba-before { background: #FEF2F2; border: 1.5px solid #FECACA; }
+  .ba-after { background: #F0FDF4; border: 1.5px solid #BBF7D0; }
+  .ba-label { font-size: 12px; font-weight: 800; letter-spacing: 1px; margin-bottom: 14px; }
+  .ba-before .ba-label { color: #DC2626; }
+  .ba-after .ba-label { color: #16A34A; }
+  .ba-item { font-size: 14px; line-height: 1.6; padding: 6px 0; border-bottom: 1px solid rgba(0,0,0,0.06); display: flex; gap: 8px; }
+  .ba-item:last-child { border-bottom: none; }
+
+  /* PAIN */
+  .pain-list { list-style: none; }
+  .pain-list li {
+    padding: 14px 16px 14px 52px; position: relative;
+    font-size: 16px; line-height: 1.5; border-bottom: 1px solid #F3F0FF;
+  }
+  .pain-list li::before { content: '✗'; position: absolute; left: 16px; color: #DC2626; font-weight: 800; font-size: 18px; }
+
+  /* TRANSITION */
+  .myth-grid { display: grid; gap: 12px; margin-top: 24px; }
+  .myth-row { display: flex; gap: 12px; }
+  .myth-box, .truth-box { flex: 1; border-radius: 12px; padding: 16px; font-size: 14px; line-height: 1.5; }
+  .myth-box { background: #FEF2F2; color: #991B1B; }
+  .truth-box { background: #F0FDF4; color: #166534; }
+  .myth-box strong, .truth-box strong { display: block; font-size: 11px; letter-spacing: 0.8px; margin-bottom: 4px; }
+  @media(max-width:480px){ .myth-row { flex-direction: column; } }
+
+  /* WHAT'S INSIDE */
+  .chapters { display: grid; gap: 16px; }
+  .chapter-card {
+    background: white; border-radius: 12px; padding: 20px 24px;
+    display: flex; align-items: flex-start; gap: 16px;
+    box-shadow: 0 2px 12px rgba(108,63,197,0.08);
+    border: 1px solid #F0EBFF;
+  }
+  .chap-num {
+    background: linear-gradient(135deg, #6C3FC5, #8B5CF6); color: white;
+    font-weight: 800; font-size: 14px; width: 40px; height: 40px;
+    border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .chap-title { font-weight: 700; font-size: 16px; color: #1A1A2E; }
+  .chap-desc { font-size: 14px; color: #6B7280; margin-top: 2px; line-height: 1.4; }
+  .chap-badge { display: inline-block; background: #EDE7FF; color: #6C3FC5; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 10px; margin-top: 5px; }
+
+  /* BONUS */
+  .bonus-box {
+    background: linear-gradient(135deg, #FEF3C7, #FDE68A);
+    border: 2px solid #F59E0B;
+    border-radius: 16px; padding: 24px 28px;
+    display: flex; gap: 20px; align-items: flex-start;
+  }
+  .bonus-icon { font-size: 40px; flex-shrink: 0; }
+  .bonus-title { font-weight: 800; font-size: 17px; color: #92400E; margin-bottom: 4px; }
+  .bonus-desc { font-size: 14px; color: #78350F; line-height: 1.5; }
+  .bonus-val { margin-top: 8px; font-size: 13px; color: #92400E; }
+  .bonus-val s { opacity: 0.6; }
+  .bonus-val strong { color: #16A34A; }
+
+  /* BENEFITS */
+  .benefits-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+  .benefit-card { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 28px 20px; text-align: center; }
+  .benefit-icon { font-size: 36px; margin-bottom: 12px; }
+  .benefit-title { color: white; font-weight: 700; font-size: 16px; margin-bottom: 6px; }
+  .benefit-desc { color: rgba(255,255,255,0.65); font-size: 14px; line-height: 1.5; }
+
+  /* WHO IT'S FOR */
+  .for-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+  .for-card { background: white; border-radius: 14px; padding: 20px; box-shadow: 0 2px 10px rgba(108,63,197,0.07); border-top: 3px solid #6C3FC5; }
+  .for-emoji { font-size: 28px; margin-bottom: 10px; }
+  .for-title { font-weight: 700; font-size: 15px; color: #1A1A2E; margin-bottom: 4px; }
+  .for-desc { font-size: 13px; color: #6B7280; line-height: 1.5; }
+
+  /* TESTIMONIALS */
+  .reviews { display: grid; gap: 20px; }
+  .review { background: white; border-radius: 16px; padding: 24px; box-shadow: 0 2px 16px rgba(108,63,197,0.1); border-left: 4px solid #6C3FC5; }
+  .review-text { font-size: 15px; line-height: 1.7; color: #374151; font-style: italic; margin-bottom: 14px; }
+  .reviewer { display: flex; align-items: center; gap: 12px; }
+  .reviewer-avatar { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; background: linear-gradient(135deg, #EDE7FF, #C4B5FD); }
+  .reviewer-name { font-weight: 700; font-size: 15px; }
+  .reviewer-sub { font-size: 13px; color: #9CA3AF; }
+  .stars { color: #F59E0B; font-size: 14px; margin-bottom: 2px; }
+
+  /* URGENCY */
+  .urgency-box {
+    background: #FEF2F2; border: 2px solid #FECACA; border-radius: 16px;
+    padding: 24px 28px; text-align: center;
+  }
+  .urgency-box h3 { color: #DC2626; font-size: 20px; margin-bottom: 8px; }
+  .urgency-box p { color: #7F1D1D; font-size: 15px; line-height: 1.6; }
+
+  /* FAQ */
+  .faq { display: grid; gap: 12px; }
+  .faq-item { background: white; border-radius: 12px; padding: 20px 24px; box-shadow: 0 1px 8px rgba(0,0,0,0.06); }
+  .faq-q { font-weight: 700; font-size: 16px; color: #1A1A2E; margin-bottom: 8px; }
+  .faq-a { font-size: 15px; color: #6B7280; line-height: 1.6; }
+
+  /* PRICE FINAL */
+  .price-final-block {
+    background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 24px; padding: 32px; margin-bottom: 28px; display: inline-block; min-width: 300px;
+  }
+  .pf-what { color: rgba(255,255,255,0.7); font-size: 14px; margin-bottom: 16px; }
+  .pf-line { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.1); font-size: 15px; color: rgba(255,255,255,0.8); }
+  .pf-line:last-child { border-bottom: none; }
+  .pf-line strong { color: white; }
+  .pf-total { display: flex; justify-content: space-between; align-items: center; margin-top: 16px; padding-top: 16px; border-top: 2px solid rgba(255,255,255,0.2); }
+  .pf-total-label { color: white; font-weight: 700; font-size: 17px; }
+  .pf-total-price { color: #FCD34D; font-weight: 800; font-size: 32px; }
+  .pf-total-old { color: rgba(255,255,255,0.4); font-size: 14px; text-decoration: line-through; margin-left: 8px; }
+
+  /* CTA FINAL */
+  .cta-final { background: linear-gradient(135deg, #3B1FA0, #6C3FC5); padding: 80px 20px; text-align: center; color: white; }
+  .cta-final h2 { color: white; margin-bottom: 12px; }
+  .cta-final p { color: rgba(255,255,255,0.8); font-size: 17px; margin-bottom: 36px; line-height: 1.6; }
+  .guarantee { display: inline-flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 50px; padding: 10px 24px; font-size: 14px; color: rgba(255,255,255,0.85); margin-top: 16px; }
+
+  .purple { color: #6C3FC5; }
+  .yellow { color: #F59E0B; }
+  .red { color: #DC2626; }
+</style>
+</head>
+<body>
+
+<!-- STICKY COUNTDOWN -->
+<div class="timer-bar">
+  🔥 Скидка 34% сгорает через: <span id="countdown">23:59:47</span> <span>— цена вернётся к 1490 ₽</span>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="badge">★ Более 800 читателей уже изменили жизнь ★</div>
+  <div class="book-mockup">
+    <div>
+      <div class="book-star">🧠</div>
+      <div class="book-title">КАК ПОВЫСИТЬ САМООЦЕНКУ И УВЕРЕННОСТЬ В СЕБЕ</div>
+      <div class="book-sub">Практический гайд</div>
+    </div>
+  </div>
+  <h1>Ты устал(а) постоянно<br>сомневаться в себе.<br><span>Пора это изменить.</span></h1>
+  <p class="hero-sub">7 техник, основанных на нейронауке и психологии — для тех, кто хочет наконец перестать бояться чужой оценки и почувствовать себя достаточным.</p>
+
+  <div class="price-block">
+    <div class="price-old">Обычная цена: 1 490 ₽</div>
+    <div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:4px;">
+      <div class="price-new"><sup>₽</sup>990</div>
+      <span class="price-discount">−34%</span>
+    </div>
+    <div class="price-why">⏳ Скидка действует только сегодня</div>
+  </div>
+  <br>
+  <a class="cta-btn" href="#">Получить гайд за 990 ₽</a>
+  <div class="cta-sub">🔒 Безопасная оплата · PDF придёт на почту сразу после оплаты</div>
+</section>
+
+<!-- SOCIAL PROOF BAR -->
+<div class="social-bar">
+  <div class="social-item">⭐ <strong>4.9</strong> средняя оценка</div>
+  <div class="social-item">👥 <strong>800+</strong> читателей</div>
+  <div class="social-item">📥 <strong>Мгновенное</strong> скачивание</div>
+  <div class="social-item">🕐 <strong>20–30 мин/день</strong> — и всё</div>
+</div>
+
+<!-- PAIN -->
+<section class="section section-white">
+  <div class="container">
+    <h2>Узнаёшь себя?</h2>
+    <p style="color:#6B7280;font-size:16px;margin-bottom:20px;line-height:1.6;">Если хотя бы 3 пункта из этого списка — про тебя, этот гайд создан именно для тебя:</p>
+    <ul class="pain-list">
+      <li>Ты постоянно сравниваешь себя с другими — и всегда проигрываешь в этом сравнении</li>
+      <li>Тебе сложно сказать «нет», ты соглашаешься на всё из страха обидеть или потерять одобрение</li>
+      <li>Перед важными решениями накрывает страх: «А вдруг я ошибусь? А вдруг осудят?»</li>
+      <li>Ты критикуешь себя за каждую мелкую ошибку — жёстче, чем критиковал бы любого другого</li>
+      <li>Комплименты вызывают неловкость, а не радость — ты не веришь им</li>
+      <li>В голове постоянно крутится: «Кто я такой(ая), чтобы хотеть большего?»</li>
+      <li>Ты откладываешь важные действия, потому что боишься облажаться на виду у всех</li>
+      <li>После разговора с кем-то мысленно прокручиваешь: «Правильно ли я сказал(а)?»</li>
+    </ul>
+  </div>
+</section>
+
+<!-- BEFORE / AFTER -->
+<section class="section section-light">
+  <div class="container">
+    <h2 class="center">Жизнь до и после гайда</h2>
+    <p class="subtitle">Разница — не магия. Разница — в инструментах.</p>
+    <div class="before-after">
+      <div class="ba-card ba-before">
+        <div class="ba-label">✗ ДО</div>
+        <div class="ba-item">😰 «Я недостаточно хорош(а)»</div>
+        <div class="ba-item">😶 Молчишь, когда хочешь высказаться</div>
+        <div class="ba-item">😓 Говоришь «да», когда хочешь «нет»</div>
+        <div class="ba-item">😔 Чужое мнение важнее своего</div>
+        <div class="ba-item">😨 Действие парализует страх осуждения</div>
+        <div class="ba-item">😞 Себя — последним в списке приоритетов</div>
+      </div>
+      <div class="ba-card ba-after">
+        <div class="ba-label">✓ ПОСЛЕ</div>
+        <div class="ba-item">💪 «Я справляюсь и расту»</div>
+        <div class="ba-item">🗣️ Высказываешь мнение спокойно и уверенно</div>
+        <div class="ba-item">✋ Говоришь «нет» без чувства вины</div>
+        <div class="ba-item">🧭 Опираешься на свои ценности</div>
+        <div class="ba-item">🚀 Действуешь, даже когда страшно</div>
+        <div class="ba-item">❤️ Относишься к себе с уважением</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MYTH BUSTERS -->
+<section class="section section-white">
+  <div class="container">
+    <h2 class="center">Почему «просто верь в себя» не работает</h2>
+    <p class="subtitle">И что на самом деле меняет самооценку</p>
+    <div class="myth-grid">
+      <div class="myth-row">
+        <div class="myth-box"><strong>МИФ</strong>Самооценка либо есть, либо нет — с этим рождаются</div>
+        <div class="truth-box"><strong>ПРАВДА</strong>Самооценка — это навык. Его можно развить в любом возрасте через практику</div>
+      </div>
+      <div class="myth-row">
+        <div class="myth-box"><strong>МИФ</strong>Аффирмации перед зеркалом — это то, что помогает</div>
+        <div class="truth-box"><strong>ПРАВДА</strong>Если мозг не верит словам — он их отвергает. Нужны доказательства, не декларации</div>
+      </div>
+      <div class="myth-row">
+        <div class="myth-box"><strong>МИФ</strong>Сначала нужно стать лучше, потом полюбить себя</div>
+        <div class="truth-box"><strong>ПРАВДА</strong>Самопринятие — это условие роста, а не его результат. Начни сейчас</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT'S INSIDE -->
+<section class="section section-light">
+  <div class="container">
+    <h2 class="center">Что внутри гайда</h2>
+    <p class="subtitle">30+ страниц практики. Никакой воды — только то, что реально работает.</p>
+    <div class="chapters">
+      <div class="chapter-card"><div class="chap-num">01</div><div><div class="chap-title">Откуда берётся низкая самооценка</div><div class="chap-desc">Поймёшь корни — перестанешь винить себя. Знание причины снимает половину боли.</div></div></div>
+      <div class="chapter-card"><div class="chap-num">02</div><div><div class="chap-title">Техника «Смена голоса»</div><div class="chap-desc">Как остановить внутреннего критика и перестать разрушать себя изнутри.</div><div class="chap-badge">⚡ Упражнение на сегодня</div></div></div>
+      <div class="chapter-card"><div class="chap-num">03</div><div><div class="chap-title">Метод «Дневник побед»</div><div class="chap-desc">Перепрограммируй негативное смещение мозга. Работает уже через 7 дней.</div><div class="chap-badge">⚡ Упражнение на сегодня</div></div></div>
+      <div class="chapter-card"><div class="chap-num">04</div><div><div class="chap-title">Упражнение «Я достаточно»</div><div class="chap-desc">Самопринятие как фундамент — без этого шага всё остальное не работает.</div><div class="chap-badge">⚡ Упражнение на сегодня</div></div></div>
+      <div class="chapter-card"><div class="chap-num">05</div><div><div class="chap-title">Маленькие смелые шаги</div><div class="chap-desc">Уверенность строится через действие — не ожидание «подходящего момента».</div></div></div>
+      <div class="chapter-card"><div class="chap-num">06</div><div><div class="chap-title">Метод «Зеркало»</div><div class="chap-desc">5 минут утром — и отношение к себе начинает меняться. Читатели плачут от этого упражнения (хорошими слезами).</div><div class="chap-badge">⚡ Упражнение на сегодня</div></div></div>
+      <div class="chapter-card"><div class="chap-num">07</div><div><div class="chap-title">Здоровые границы</div><div class="chap-desc">Научишься говорить «нет» без чувства вины — и перестанешь ставить всех выше себя.</div></div></div>
+      <div class="chapter-card"><div class="chap-num">08</div><div><div class="chap-title">21-дневный план действий</div><div class="chap-desc">Пошаговый маршрут: что делать в каждый из 21 дня. Без этого плана техники останутся просто текстом.</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- BONUS -->
+<section class="section section-white">
+  <div class="container">
+    <h2 class="center">Бонус при покупке сегодня</h2>
+    <p class="subtitle">Только для тех, кто оформит заказ до конца акции</p>
+    <div class="bonus-box">
+      <div class="bonus-icon">🎁</div>
+      <div>
+        <div class="bonus-title">Чек-лист «10 фраз, которые убивают самооценку — и чем их заменить»</div>
+        <div class="bonus-desc">Узнаешь, какие слова — твои собственные и чужие — разрушают уверенность незаметно. И получишь готовые замены на каждую из них.</div>
+        <div class="bonus-val">Стоимость: <s>490 ₽</s> → <strong>Бесплатно при заказе сегодня</strong></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOR WHOM -->
+<section class="section section-light">
+  <div class="container">
+    <h2 class="center">Для кого этот гайд</h2>
+    <p class="subtitle">Разные жизни — одна боль. Гайд работает для всех.</p>
+    <div class="for-grid">
+      <div class="for-card"><div class="for-emoji">👩‍💼</div><div class="for-title">Специалисты и менеджеры</div><div class="for-desc">Боятся высказывать идеи, не верят в свою экспертизу, страдают от синдрома самозванца</div></div>
+      <div class="for-card"><div class="for-emoji">🧑‍🎓</div><div class="for-title">Молодые люди</div><div class="for-desc">Сравнивают себя с блогерами и друзьями, чувствуют, что «все успели, а я нет»</div></div>
+      <div class="for-card"><div class="for-emoji">👩‍👧</div><div class="for-title">Мамы и жёны</div><div class="for-desc">Растворились в заботе о других и забыли, что у них тоже есть потребности и ценность</div></div>
+      <div class="for-card"><div class="for-emoji">🧑‍💻</div><div class="for-title">Фрилансеры</div><div class="for-desc">Боятся называть цену, соглашаются на всё, чувствуют, что недостаточно хороши</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- BENEFITS -->
+<section class="section section-dark">
+  <div class="container">
+    <h2 class="center" style="color:white">Что изменится после гайда</h2>
+    <p class="subtitle" style="color:rgba(255,255,255,0.6)">Не обещаем магию — обещаем инструменты, которые работают</p>
+    <div class="benefits-grid">
+      <div class="benefit-card"><div class="benefit-icon">🧘</div><div class="benefit-title">Внутренний покой</div><div class="benefit-desc">Меньше тревожных мыслей о чужом мнении и оценке</div></div>
+      <div class="benefit-card"><div class="benefit-icon">🗣️</div><div class="benefit-title">Смелость говорить</div><div class="benefit-desc">Высказываться, не извиняясь за своё мнение</div></div>
+      <div class="benefit-card"><div class="benefit-icon">🚀</div><div class="benefit-title">Действие вместо страха</div><div class="benefit-desc">Делать шаги вперёд, даже когда страшно</div></div>
+      <div class="benefit-card"><div class="benefit-icon">❤️</div><div class="benefit-title">Принятие себя</div><div class="benefit-desc">Перестать войну с собой и наконец начать жить</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="section section-light">
+  <div class="container">
+    <h2 class="center">Что говорят читатели</h2>
+    <p class="subtitle">800+ человек уже прошли этот путь</p>
+    <div class="reviews">
+      <div class="review">
+        <div class="stars">★★★★★</div>
+        <div class="review-text">«Я 30 лет жила с голосом в голове, который говорил, что я недостаточно хороша. После техники "Смена голоса" этот голос стал тише. Кажется, впервые в жизни я на своей стороне. Это бесценно.»</div>
+        <div class="reviewer"><div class="reviewer-avatar">🌸</div><div><div class="reviewer-name">Анастасия, 34 года</div><div class="reviewer-sub">менеджер, Москва</div></div></div>
+      </div>
+      <div class="review">
+        <div class="stars">★★★★★</div>
+        <div class="review-text">«Дневник побед — это просто. Но это работает. За 2 недели я начал замечать, что я делаю хорошо — а не только то, где облажался. Это меняет всё восприятие себя. Жалею, что не нашёл раньше.»</div>
+        <div class="reviewer"><div class="reviewer-avatar">⚡</div><div><div class="reviewer-name">Дмитрий, 27 лет</div><div class="reviewer-sub">фрилансер, Санкт-Петербург</div></div></div>
+      </div>
+      <div class="review">
+        <div class="stars">★★★★★</div>
+        <div class="review-text">«Упражнение с зеркалом было странным первые три дня. На четвёртый я заплакала — хорошими слезами. Поняла, что никогда не говорила себе добрых слов. Рекомендую каждой женщине. Это трансформация.»</div>
+        <div class="reviewer"><div class="reviewer-avatar">🦋</div><div><div class="reviewer-name">Марина, 41 год</div><div class="reviewer-sub">предприниматель, Екатеринбург</div></div></div>
+      </div>
+      <div class="review">
+        <div class="stars">★★★★★</div>
+        <div class="review-text">«Синдром самозванца меня преследовал годами. После главы про маленькие смелые шаги я стал делать то, что откладывал месяцами. Уже за первую неделю — три новых клиента. Совпадение? Не думаю.»</div>
+        <div class="reviewer"><div class="reviewer-avatar">🎯</div><div><div class="reviewer-name">Артём, 31 год</div><div class="reviewer-sub">дизайнер, Новосибирск</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- URGENCY -->
+<section class="section section-white">
+  <div class="container">
+    <div class="urgency-box">
+      <h3>⏰ Скидка действует только сегодня</h3>
+      <p>Цена 990 ₽ вместо 1490 ₽ — это специальная акция запуска. После окончания таймера цена вернётся к стандартной. Бонусный чек-лист (стоимостью 490 ₽) тоже исчезнет из комплекта.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section section-light">
+  <div class="container">
+    <h2 class="center">Частые вопросы</h2>
+    <br>
+    <div class="faq">
+      <div class="faq-item"><div class="faq-q">Как я получу гайд?</div><div class="faq-a">Сразу после оплаты на твою почту придёт письмо со ссылкой на скачивание PDF. Это займёт меньше минуты. Никаких ожиданий.</div></div>
+      <div class="faq-item"><div class="faq-q">Нужно ли специальное образование или подготовка?</div><div class="faq-a">Нет. Гайд написан простым языком без психологического жаргона. Всё что нужно — желание измениться и 20–30 минут в день.</div></div>
+      <div class="faq-item"><div class="faq-q">Через сколько я увижу результат?</div><div class="faq-a">Первые сдвиги — уже в первую неделю. Читатели отмечают изменения после первых двух упражнений. Устойчивые изменения — по результатам 21-дневного плана.</div></div>
+      <div class="faq-item"><div class="faq-q">Почему так дёшево — это серьёзно?</div><div class="faq-a">Это акция запуска. Цель — собрать отзывы и помочь как можно большему числу людей. После акции цена вернётся к 1490 ₽. Сейчас — самое выгодное время.</div></div>
+      <div class="faq-item"><div class="faq-q">Это поможет, если у меня глубокая травма?</div><div class="faq-a">Гайд — это практический инструмент, не замена терапии. При серьёзных психологических трудностях рекомендуем работать со специалистом параллельно. Для большинства людей с «бытовой» низкой самооценкой — работает отлично.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="cta-final">
+  <div class="container">
+    <h2>Всё что тебе нужно —<br>уже внутри тебя.</h2>
+    <p>Этот гайд поможет это увидеть.<br>Сделай один шаг прямо сейчас — завтра будет другой человек.</p>
+
+    <div class="price-final-block">
+      <div class="pf-what">Что ты получаешь:</div>
+      <div class="pf-line"><span>PDF-гайд (30+ страниц, 7 техник)</span><strong>990 ₽</strong></div>
+      <div class="pf-line"><span>21-дневный план действий</span><strong>включён</strong></div>
+      <div class="pf-line"><span>🎁 Бонус: Чек-лист «10 фраз»</span><strong style="color:#FCD34D">бесплатно</strong></div>
+      <div class="pf-total">
+        <span class="pf-total-label">Итого:</span>
+        <span><span class="pf-total-price">990 ₽</span><span class="pf-total-old">1 980 ₽</span></span>
+      </div>
+    </div>
+    <br>
+    <a class="cta-btn" href="#">Забрать гайд + бонус за 990 ₽</a>
+    <br>
+    <div class="guarantee">🔒 Безопасная оплата &nbsp;·&nbsp; Скачивание сразу &nbsp;·&nbsp; PDF на любом устройстве</div>
+  </div>
+</section>
+
+<script>
+  // Countdown timer
+  function updateCountdown() {
+    const saved = localStorage.getItem('saleEnd');
+    let end;
+    if (saved) {
+      end = parseInt(saved);
+    } else {
+      end = Date.now() + 24 * 60 * 60 * 1000;
+      localStorage.setItem('saleEnd', end);
+    }
+    const el = document.getElementById('countdown');
+    function tick() {
+      const diff = end - Date.now();
+      if (diff <= 0) { el.textContent = '00:00:00'; return; }
+      const h = Math.floor(diff / 3600000);
+      const m = Math.floor((diff % 3600000) / 60000);
+      const s = Math.floor((diff % 60000) / 1000);
+      el.textContent = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+    }
+    tick();
+    setInterval(tick, 1000);
+  }
+  updateCountdown();
+</script>
+</body>
+</html>
