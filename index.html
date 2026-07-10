@@ -4,291 +4,332 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Как повысить самооценку — Практический гайд</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: 'Segoe UI', Arial, sans-serif; background: #0F0A1E; color: #1A1A2E; }
-
-  /* STICKY TIMER BAR */
-  .timer-bar {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 999;
-    background: linear-gradient(90deg, #D97706, #F59E0B);
-    color: white; text-align: center;
-    padding: 10px 20px;
-    font-size: 14px; font-weight: 700;
-    display: flex; align-items: center; justify-content: center; gap: 12px;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+  :root{
+    --ink:#241729;
+    --ink-soft:#665B6E;
+    --ink-faint:#9A8FA0;
+    --paper:#F8F3EC;
+    --paper-card:#FFFDF9;
+    --plum-900:#231430;
+    --plum-800:#33203F;
+    --plum-700:#472C55;
+    --gold-500:#AD8148;
+    --gold-400:#C79F60;
+    --gold-100:#EFE2C4;
+    --sage:#6E7C5E;
+    --sage-bg:#EBEFE3;
+    --clay:#9C6249;
+    --clay-bg:#F2E7DF;
+    --line:#E7DFD1;
+    --line-dark:rgba(255,255,255,0.14);
   }
-  .timer-bar span { font-size: 13px; font-weight: 400; opacity: 0.9; }
-  #countdown { font-size: 18px; font-weight: 800; background: rgba(0,0,0,0.2); padding: 2px 10px; border-radius: 6px; letter-spacing: 1px; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body {
+    font-family:'Inter', Arial, sans-serif;
+    background:var(--paper);
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{ font-family:'Fraunces', serif; letter-spacing:-0.01em; }
+
+  @media (prefers-reduced-motion: no-preference){
+    .reveal{ opacity:0; transform:translateY(16px); transition:opacity .7s ease, transform .7s ease; }
+    .reveal.is-visible{ opacity:1; transform:translateY(0); }
+  }
+
+  /* fine paper/velvet grain, used on dark + hero surfaces */
+  .grain{ position:relative; isolation:isolate; }
+  .grain::after{
+    content:''; position:absolute; inset:0; pointer-events:none; z-index:1;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    opacity:.05; mix-blend-mode:overlay;
+  }
 
   /* HERO */
-  .hero {
-    background: linear-gradient(135deg, #3B1FA0 0%, #6C3FC5 50%, #8B5CF6 100%);
-    padding: 100px 20px 60px;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
+  .hero{
+    background:radial-gradient(130% 110% at 50% -15%, var(--plum-700), var(--plum-900) 60%);
+    padding:100px 20px 84px;
+    text-align:center;
+    position:relative;
   }
-  .hero::before { content: ''; position: absolute; top: -80px; right: -80px; width: 300px; height: 300px; background: rgba(255,255,255,0.05); border-radius: 50%; }
-  .hero::after { content: ''; position: absolute; bottom: -60px; left: -60px; width: 200px; height: 200px; background: rgba(255,255,255,0.04); border-radius: 50%; }
+  .hero > *{ position:relative; z-index:2; }
+  .kicker{
+    display:inline-flex; align-items:center; gap:12px;
+    color:var(--gold-400); font-size:11.5px; letter-spacing:2.5px; text-transform:uppercase;
+    font-weight:600; margin-bottom:46px;
+  }
+  .kicker::before, .kicker::after{ content:''; width:30px; height:1px; background:var(--gold-400); opacity:.55; }
 
-  .badge {
-    display: inline-block;
-    background: rgba(245,158,11,0.2); border: 1px solid #F59E0B;
-    color: #FCD34D; font-size: 13px; padding: 6px 18px;
-    border-radius: 20px; margin-bottom: 24px; font-weight: 600; letter-spacing: 0.5px;
+  /* Book mockup — signature element */
+  .book-mockup{
+    width:212px; height:284px;
+    margin:0 auto 48px;
+    position:relative;
+    background:
+      radial-gradient(140% 90% at 20% 0%, rgba(255,255,255,0.05), transparent 55%),
+      linear-gradient(160deg,#33203F,#221430 75%);
+    border-radius:2px 12px 12px 2px;
+    box-shadow:-14px 16px 34px rgba(0,0,0,0.5), 0 2px 0 rgba(255,255,255,0.03) inset;
+    display:flex; align-items:center; justify-content:center;
+    padding:28px 22px;
   }
-  .hero h1 {
-    font-size: clamp(28px, 6vw, 52px); color: white; font-weight: 800;
-    line-height: 1.15; margin-bottom: 20px; max-width: 720px; margin-left: auto; margin-right: auto;
+  .book-mockup::before{
+    content:''; position:absolute; left:0; top:5%; bottom:5%; width:9px;
+    background:linear-gradient(to right, rgba(0,0,0,0.6), rgba(0,0,0,0));
   }
-  .hero h1 span { color: #FCD34D; }
-  .hero-sub {
-    font-size: clamp(15px, 2.5vw, 19px); color: rgba(255,255,255,0.85);
-    max-width: 580px; margin: 0 auto 36px; line-height: 1.7;
+  .book-mockup::after{
+    content:''; position:absolute; inset:14px; border:1px solid rgba(199,159,96,0.28); border-radius:1px;
+    pointer-events:none;
   }
+  .book-spine-hl{ position:absolute; top:-2px; right:30px; width:1px; height:calc(100% + 4px); background:linear-gradient(to bottom, transparent, var(--gold-400) 15%, var(--gold-400) 85%, transparent); opacity:.7; }
+  .book-rule{ width:30px; height:1px; background:var(--gold-400); margin:0 auto 18px; opacity:.75; }
+  .book-title{
+    font-family:'Fraunces', serif; font-weight:600; font-size:16px; line-height:1.4;
+    color:#F3E9D2; letter-spacing:.5px; text-transform:uppercase;
+  }
+  .book-sub{ font-family:'Fraunces', serif; font-style:italic; font-size:12px; color:var(--gold-400); margin-top:16px; }
 
-  .book-mockup {
-    width: 200px; height: 260px;
-    background: linear-gradient(135deg, #4C1D95, #7C3AED);
-    border-radius: 8px 16px 16px 8px;
-    margin: 0 auto 36px;
-    display: flex; align-items: center; justify-content: center;
-    box-shadow: -8px 8px 24px rgba(0,0,0,0.4), 4px 0 0 #2D1B69;
-    position: relative; color: white; text-align: center; padding: 20px;
+  .hero h1{
+    font-size:clamp(28px, 5.4vw, 46px); color:#FBF7EF; font-weight:600;
+    line-height:1.22; margin-bottom:20px; max-width:680px; margin-left:auto; margin-right:auto;
   }
-  .book-mockup::before {
-    content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 12px;
-    background: linear-gradient(to right, #2D1B69, #4C1D95); border-radius: 8px 0 0 8px;
+  .hero h1 em{ font-style:italic; color:var(--gold-400); }
+  .hero-sub{
+    font-size:clamp(15px, 2.2vw, 17.5px); color:rgba(251,247,239,0.72);
+    max-width:520px; margin:0 auto 40px; line-height:1.75; font-weight:400;
   }
-  .book-title { font-size: 16px; font-weight: 800; line-height: 1.3; }
-  .book-sub { font-size: 11px; color: rgba(255,255,255,0.7); margin-top: 8px; }
-  .book-star { font-size: 28px; margin-bottom: 10px; }
 
   /* PRICE BLOCK */
-  .price-block {
-    background: rgba(255,255,255,0.08);
-    border: 1px solid rgba(255,255,255,0.15);
-    border-radius: 20px;
-    padding: 24px 32px;
-    display: inline-block;
-    margin-bottom: 28px;
+  .price-block{
+    border:1px solid var(--line-dark);
+    border-radius:4px;
+    padding:22px 34px;
+    display:inline-block;
+    margin-bottom:26px;
+    background:rgba(255,255,255,0.03);
   }
-  .price-old { color: rgba(255,255,255,0.5); font-size: 16px; text-decoration: line-through; margin-bottom: 4px; }
-  .price-new { color: white; font-size: 42px; font-weight: 800; line-height: 1; }
-  .price-new sup { font-size: 20px; vertical-align: top; margin-top: 6px; display: inline-block; }
-  .price-discount {
-    display: inline-block;
-    background: #DC2626; color: white;
-    font-size: 13px; font-weight: 700;
-    padding: 3px 10px; border-radius: 20px;
-    margin-left: 10px; vertical-align: middle;
+  .price-old{ color:rgba(251,247,239,0.45); font-size:14px; text-decoration:line-through; margin-bottom:6px; }
+  .price-new{ color:#FBF7EF; font-size:38px; font-weight:600; line-height:1; font-family:'Fraunces', serif; }
+  .price-new sup{ font-size:18px; vertical-align:top; margin-top:5px; display:inline-block; color:var(--gold-400); }
+  .price-tag{
+    display:inline-block; color:var(--gold-400);
+    font-size:12px; font-weight:600; letter-spacing:.5px;
+    margin-left:10px; vertical-align:middle; border:1px solid var(--gold-500); border-radius:20px; padding:2px 10px;
   }
-  .price-why { color: rgba(255,255,255,0.65); font-size: 13px; margin-top: 6px; }
+  .price-why{ color:rgba(251,247,239,0.5); font-size:12.5px; margin-top:8px; letter-spacing:.2px; }
 
-  .cta-btn {
-    display: inline-block;
-    background: linear-gradient(135deg, #F59E0B, #D97706);
-    color: white; font-size: 18px; font-weight: 700;
-    padding: 18px 48px; border-radius: 50px;
-    text-decoration: none;
-    box-shadow: 0 8px 24px rgba(245,158,11,0.4);
-    transition: transform 0.2s, box-shadow 0.2s;
-    cursor: pointer; border: none;
+  .cta-btn{
+    display:inline-block; position:relative; isolation:isolate; overflow:hidden;
+    background:transparent;
+    color:var(--gold-400); font-size:13.5px; font-weight:600;
+    padding:18px 46px; border-radius:2px;
+    text-decoration:none; letter-spacing:1.8px; text-transform:uppercase;
+    border:1px solid var(--gold-500);
+    transition:color .35s ease;
+    cursor:pointer;
   }
-  .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(245,158,11,0.5); }
-  .cta-sub { color: rgba(255,255,255,0.6); font-size: 13px; margin-top: 10px; }
+  .cta-btn::before{
+    content:''; position:absolute; inset:0; z-index:-1;
+    background:linear-gradient(135deg, var(--gold-400), var(--gold-500));
+    transform:scaleX(0); transform-origin:left; transition:transform .35s ease;
+  }
+  .cta-btn:hover{ color:#241530; }
+  .cta-btn:hover::before{ transform:scaleX(1); }
+  .cta-sub{ color:rgba(251,247,239,0.42); font-size:12px; margin-top:16px; letter-spacing:.3px; }
 
   /* SOCIAL PROOF BAR */
-  .social-bar {
-    background: #0F0A1E;
-    padding: 18px 20px;
-    text-align: center;
-    display: flex; flex-wrap: wrap; justify-content: center; gap: 28px;
+  .social-bar{
+    background:var(--paper);
+    padding:26px 20px;
+    text-align:center;
+    display:flex; flex-wrap:wrap; justify-content:center; gap:0;
+    border-bottom:1px solid var(--line);
   }
-  .social-item { color: rgba(255,255,255,0.75); font-size: 14px; display: flex; align-items: center; gap: 7px; }
-  .social-item strong { color: white; font-size: 18px; }
+  .social-item{
+    color:var(--ink-soft); font-size:13px;
+    padding:0 26px; border-right:1px solid var(--line);
+  }
+  .social-item:last-child{ border-right:none; }
+  .social-item strong{ display:block; color:var(--ink); font-family:'Fraunces', serif; font-size:22px; font-weight:600; margin-bottom:2px; }
 
   /* SECTIONS */
-  .section { padding: 64px 20px; }
-  .container { max-width: 760px; margin: 0 auto; }
-  .section-white { background: white; }
-  .section-light { background: #F8F5FF; }
-  .section-dark { background: #1A0A3E; color: white; }
+  .section{ padding:80px 20px; }
+  .container{ max-width:740px; margin:0 auto; }
+  .section-white{ background:var(--paper-card); }
+  .section-light{ background:var(--paper); }
+  .section-dark{ background:var(--plum-900); color:#FBF7EF; }
 
-  h2 { font-size: clamp(22px, 4vw, 36px); font-weight: 800; margin-bottom: 16px; line-height: 1.25; }
-  h2.center { text-align: center; }
-  .subtitle { text-align: center; color: #6B7280; font-size: 17px; line-height: 1.6; margin-bottom: 40px; }
-
-  /* HOOK: BEFORE/AFTER */
-  .before-after { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 10px; }
-  @media(max-width:540px){ .before-after { grid-template-columns: 1fr; } }
-  .ba-card { border-radius: 16px; padding: 24px 20px; }
-  .ba-before { background: #FEF2F2; border: 1.5px solid #FECACA; }
-  .ba-after { background: #F0FDF4; border: 1.5px solid #BBF7D0; }
-  .ba-label { font-size: 12px; font-weight: 800; letter-spacing: 1px; margin-bottom: 14px; }
-  .ba-before .ba-label { color: #DC2626; }
-  .ba-after .ba-label { color: #16A34A; }
-  .ba-item { font-size: 14px; line-height: 1.6; padding: 6px 0; border-bottom: 1px solid rgba(0,0,0,0.06); display: flex; gap: 8px; }
-  .ba-item:last-child { border-bottom: none; }
+  .eyebrow{
+    display:block; text-align:center; text-transform:uppercase; letter-spacing:2px;
+    font-size:12px; font-weight:600; color:var(--gold-500); margin-bottom:14px;
+  }
+  h2{ font-size:clamp(24px, 3.6vw, 34px); font-weight:600; margin-bottom:16px; line-height:1.28; }
+  h2.center{ text-align:center; }
+  .subtitle{ text-align:center; color:var(--ink-soft); font-size:16px; line-height:1.65; margin-bottom:44px; max-width:520px; margin-left:auto; margin-right:auto; }
 
   /* PAIN */
-  .pain-list { list-style: none; }
-  .pain-list li {
-    padding: 14px 16px 14px 52px; position: relative;
-    font-size: 16px; line-height: 1.5; border-bottom: 1px solid #F3F0FF;
+  .pain-intro{ color:var(--ink-soft); font-size:16px; margin-bottom:28px; line-height:1.65; }
+  .pain-list{ list-style:none; }
+  .pain-list li{
+    padding:16px 0 16px 30px; position:relative;
+    font-size:16px; line-height:1.55; border-bottom:1px solid var(--line); color:var(--ink);
   }
-  .pain-list li::before { content: '✗'; position: absolute; left: 16px; color: #DC2626; font-weight: 800; font-size: 18px; }
+  .pain-list li::before{ content:'—'; position:absolute; left:0; color:var(--clay); font-weight:700; }
+  .pain-list li:last-child{ border-bottom:none; }
 
-  /* TRANSITION */
-  .myth-grid { display: grid; gap: 12px; margin-top: 24px; }
-  .myth-row { display: flex; gap: 12px; }
-  .myth-box, .truth-box { flex: 1; border-radius: 12px; padding: 16px; font-size: 14px; line-height: 1.5; }
-  .myth-box { background: #FEF2F2; color: #991B1B; }
-  .truth-box { background: #F0FDF4; color: #166534; }
-  .myth-box strong, .truth-box strong { display: block; font-size: 11px; letter-spacing: 0.8px; margin-bottom: 4px; }
-  @media(max-width:480px){ .myth-row { flex-direction: column; } }
+  /* BEFORE / AFTER */
+  .before-after{ display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:8px; }
+  @media(max-width:540px){ .before-after{ grid-template-columns:1fr; } }
+  .ba-card{ border-radius:3px; padding:26px 24px; }
+  .ba-before{ background:var(--clay-bg); }
+  .ba-after{ background:var(--sage-bg); }
+  .ba-label{ font-size:11.5px; font-weight:700; letter-spacing:1.5px; margin-bottom:16px; text-transform:uppercase; }
+  .ba-before .ba-label{ color:var(--clay); }
+  .ba-after .ba-label{ color:var(--sage); }
+  .ba-item{ font-size:14.5px; line-height:1.6; padding:8px 0; border-bottom:1px solid rgba(0,0,0,0.06); color:var(--ink); }
+  .ba-item:last-child{ border-bottom:none; }
 
-  /* WHAT'S INSIDE */
-  .chapters { display: grid; gap: 16px; }
-  .chapter-card {
-    background: white; border-radius: 12px; padding: 20px 24px;
-    display: flex; align-items: flex-start; gap: 16px;
-    box-shadow: 0 2px 12px rgba(108,63,197,0.08);
-    border: 1px solid #F0EBFF;
+  /* MYTH / TRUTH */
+  .myth-grid{ display:grid; gap:14px; margin-top:20px; }
+  .myth-row{ display:flex; gap:14px; }
+  .myth-box, .truth-box{ flex:1; border-radius:3px; padding:18px 20px; font-size:14.5px; line-height:1.55; }
+  .myth-box{ background:var(--clay-bg); color:#5B3A2A; }
+  .truth-box{ background:var(--sage-bg); color:#3E4A32; }
+  .myth-box strong, .truth-box strong{ display:block; font-size:10.5px; letter-spacing:1.2px; margin-bottom:6px; text-transform:uppercase; opacity:.8; }
+  @media(max-width:480px){ .myth-row{ flex-direction:column; } }
+
+  /* CHAPTERS */
+  .chapters{ display:grid; }
+  .chapter-card{
+    padding:26px 4px; border-bottom:1px solid var(--line);
+    display:flex; align-items:flex-start; gap:26px;
+    transition:padding-left .3s ease;
   }
-  .chap-num {
-    background: linear-gradient(135deg, #6C3FC5, #8B5CF6); color: white;
-    font-weight: 800; font-size: 14px; width: 40px; height: 40px;
-    border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  .chapter-card:hover{ padding-left:12px; }
+  .chapters .chapter-card:last-child{ border-bottom:none; }
+  .chap-num{
+    font-family:'Fraunces', serif; font-style:italic; color:var(--gold-500);
+    font-weight:500; font-size:15px; width:34px; flex-shrink:0; padding-top:3px;
   }
-  .chap-title { font-weight: 700; font-size: 16px; color: #1A1A2E; }
-  .chap-desc { font-size: 14px; color: #6B7280; margin-top: 2px; line-height: 1.4; }
-  .chap-badge { display: inline-block; background: #EDE7FF; color: #6C3FC5; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 10px; margin-top: 5px; }
+  .chap-title{ font-weight:700; font-size:16.5px; color:var(--ink); font-family:'Fraunces', serif; }
+  .chap-desc{ font-size:14px; color:var(--ink-soft); margin-top:6px; line-height:1.55; }
+  .chap-badge{ display:inline-block; color:var(--gold-500); font-size:10.5px; font-weight:700; margin-top:10px; letter-spacing:1px; text-transform:uppercase; }
 
   /* BONUS */
-  .bonus-box {
-    background: linear-gradient(135deg, #FEF3C7, #FDE68A);
-    border: 2px solid #F59E0B;
-    border-radius: 16px; padding: 24px 28px;
-    display: flex; gap: 20px; align-items: flex-start;
+  .bonus-box{
+    background:var(--paper-card); border:1px solid var(--gold-500); border-left:4px solid var(--gold-500);
+    border-radius:3px; padding:26px 28px;
+    display:flex; gap:22px; align-items:flex-start;
   }
-  .bonus-icon { font-size: 40px; flex-shrink: 0; }
-  .bonus-title { font-weight: 800; font-size: 17px; color: #92400E; margin-bottom: 4px; }
-  .bonus-desc { font-size: 14px; color: #78350F; line-height: 1.5; }
-  .bonus-val { margin-top: 8px; font-size: 13px; color: #92400E; }
-  .bonus-val s { opacity: 0.6; }
-  .bonus-val strong { color: #16A34A; }
-
-  /* BENEFITS */
-  .benefits-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
-  .benefit-card { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 28px 20px; text-align: center; }
-  .benefit-icon { font-size: 36px; margin-bottom: 12px; }
-  .benefit-title { color: white; font-weight: 700; font-size: 16px; margin-bottom: 6px; }
-  .benefit-desc { color: rgba(255,255,255,0.65); font-size: 14px; line-height: 1.5; }
+  .bonus-icon{ font-size:28px; flex-shrink:0; color:var(--gold-500); }
+  .bonus-title{ font-weight:700; font-size:16.5px; color:var(--ink); margin-bottom:6px; font-family:'Fraunces', serif; }
+  .bonus-desc{ font-size:14.5px; color:var(--ink-soft); line-height:1.6; }
+  .bonus-val{ margin-top:10px; font-size:13px; color:var(--ink-soft); }
+  .bonus-val s{ opacity:.6; }
+  .bonus-val strong{ color:var(--sage); }
 
   /* WHO IT'S FOR */
-  .for-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
-  .for-card { background: white; border-radius: 14px; padding: 20px; box-shadow: 0 2px 10px rgba(108,63,197,0.07); border-top: 3px solid #6C3FC5; }
-  .for-emoji { font-size: 28px; margin-bottom: 10px; }
-  .for-title { font-weight: 700; font-size: 15px; color: #1A1A2E; margin-bottom: 4px; }
-  .for-desc { font-size: 13px; color: #6B7280; line-height: 1.5; }
+  .for-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:28px 32px; }
+  .for-card{ border-top:1px solid var(--gold-500); padding-top:18px; }
+  .for-title{ font-weight:700; font-size:15.5px; color:var(--ink); margin-bottom:8px; font-family:'Fraunces', serif; }
+  .for-desc{ font-size:13.5px; color:var(--ink-soft); line-height:1.6; }
 
-  /* TESTIMONIALS */
-  .reviews { display: grid; gap: 20px; }
-  .review { background: white; border-radius: 16px; padding: 24px; box-shadow: 0 2px 16px rgba(108,63,197,0.1); border-left: 4px solid #6C3FC5; }
-  .review-text { font-size: 15px; line-height: 1.7; color: #374151; font-style: italic; margin-bottom: 14px; }
-  .reviewer { display: flex; align-items: center; gap: 12px; }
-  .reviewer-avatar { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; background: linear-gradient(135deg, #EDE7FF, #C4B5FD); }
-  .reviewer-name { font-weight: 700; font-size: 15px; }
-  .reviewer-sub { font-size: 13px; color: #9CA3AF; }
-  .stars { color: #F59E0B; font-size: 14px; margin-bottom: 2px; }
+  /* BENEFITS */
+  .benefits-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(210px, 1fr)); gap:36px; }
+  .benefit-card{ text-align:center; padding-top:22px; border-top:1px solid var(--line-dark); }
+  .benefit-title{ color:#FBF7EF; font-weight:700; font-size:16px; margin-bottom:8px; font-family:'Fraunces', serif; }
+  .benefit-desc{ color:rgba(251,247,239,0.6); font-size:13.5px; line-height:1.55; }
 
-  /* URGENCY */
-  .urgency-box {
-    background: #FEF2F2; border: 2px solid #FECACA; border-radius: 16px;
-    padding: 24px 28px; text-align: center;
-  }
-  .urgency-box h3 { color: #DC2626; font-size: 20px; margin-bottom: 8px; }
-  .urgency-box p { color: #7F1D1D; font-size: 15px; line-height: 1.6; }
+  /* REVIEWS */
+  .reviews{ display:grid; gap:18px; }
+  .review{ background:var(--paper-card); border:1px solid var(--line); border-radius:4px; padding:30px 28px 26px; position:relative; }
+  .quote-mark{ font-family:'Fraunces', serif; font-size:44px; color:var(--gold-100); line-height:1; position:absolute; top:14px; right:20px; user-select:none; }
+  .stars{ color:var(--gold-500); font-size:13px; margin-bottom:10px; letter-spacing:2px; }
+  .review-text{ font-size:15px; line-height:1.7; color:var(--ink); font-family:'Fraunces', serif; font-style:italic; margin-bottom:16px; position:relative; z-index:1; }
+  .reviewer{ display:flex; align-items:center; gap:12px; }
+  .reviewer-avatar{ width:38px; height:38px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:16px; background:var(--gold-100); }
+  .reviewer-name{ font-weight:700; font-size:14px; color:var(--ink); }
+  .reviewer-sub{ font-size:12.5px; color:var(--ink-faint); }
 
   /* FAQ */
-  .faq { display: grid; gap: 12px; }
-  .faq-item { background: white; border-radius: 12px; padding: 20px 24px; box-shadow: 0 1px 8px rgba(0,0,0,0.06); }
-  .faq-q { font-weight: 700; font-size: 16px; color: #1A1A2E; margin-bottom: 8px; }
-  .faq-a { font-size: 15px; color: #6B7280; line-height: 1.6; }
+  .faq{ display:grid; }
+  .faq-item{ padding:24px 2px; border-bottom:1px solid var(--line); }
+  .faq:last-child .faq-item:last-child, .faq .faq-item:last-child{ border-bottom:none; }
+  .faq-q{ font-weight:700; font-size:15.5px; color:var(--ink); margin-bottom:8px; font-family:'Fraunces', serif; }
+  .faq-a{ font-size:14.5px; color:var(--ink-soft); line-height:1.6; }
 
   /* PRICE FINAL */
-  .price-final-block {
-    background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
-    border-radius: 24px; padding: 32px; margin-bottom: 28px; display: inline-block; min-width: 300px;
+  .price-final-block{
+    border:1px solid var(--line-dark); border-radius:4px; padding:30px 32px; margin-bottom:28px;
+    display:inline-block; min-width:300px; background:rgba(255,255,255,0.03);
   }
-  .pf-what { color: rgba(255,255,255,0.7); font-size: 14px; margin-bottom: 16px; }
-  .pf-line { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.1); font-size: 15px; color: rgba(255,255,255,0.8); }
-  .pf-line:last-child { border-bottom: none; }
-  .pf-line strong { color: white; }
-  .pf-total { display: flex; justify-content: space-between; align-items: center; margin-top: 16px; padding-top: 16px; border-top: 2px solid rgba(255,255,255,0.2); }
-  .pf-total-label { color: white; font-weight: 700; font-size: 17px; }
-  .pf-total-price { color: #FCD34D; font-weight: 800; font-size: 32px; }
-  .pf-total-old { color: rgba(255,255,255,0.4); font-size: 14px; text-decoration: line-through; margin-left: 8px; }
+  .pf-what{ color:rgba(251,247,239,0.55); font-size:13px; margin-bottom:16px; letter-spacing:.3px; text-transform:uppercase; }
+  .pf-line{ display:flex; justify-content:space-between; align-items:center; padding:9px 0; border-bottom:1px solid var(--line-dark); font-size:14.5px; color:rgba(251,247,239,0.75); }
+  .pf-line:last-child{ border-bottom:none; }
+  .pf-line strong{ color:#FBF7EF; }
+  .pf-total{ display:flex; justify-content:space-between; align-items:center; margin-top:18px; padding-top:18px; border-top:1px solid var(--line-dark); }
+  .pf-total-label{ color:#FBF7EF; font-weight:600; font-size:15px; font-family:'Fraunces', serif; }
+  .pf-total-price{ color:var(--gold-400); font-weight:600; font-size:30px; font-family:'Fraunces', serif; }
+  .pf-total-old{ color:rgba(251,247,239,0.4); font-size:13px; text-decoration:line-through; margin-left:8px; }
 
   /* CTA FINAL */
-  .cta-final { background: linear-gradient(135deg, #3B1FA0, #6C3FC5); padding: 80px 20px; text-align: center; color: white; }
-  .cta-final h2 { color: white; margin-bottom: 12px; }
-  .cta-final p { color: rgba(255,255,255,0.8); font-size: 17px; margin-bottom: 36px; line-height: 1.6; }
-  .guarantee { display: inline-flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 50px; padding: 10px 24px; font-size: 14px; color: rgba(255,255,255,0.85); margin-top: 16px; }
+  .cta-final{ background:radial-gradient(120% 100% at 50% 110%, var(--plum-700), var(--plum-900) 65%); padding:88px 20px; text-align:center; color:#FBF7EF; }
+  .cta-final h2{ color:#FBF7EF; margin-bottom:14px; }
+  .cta-final p{ color:rgba(251,247,239,0.7); font-size:16px; margin-bottom:40px; line-height:1.65; }
+  .guarantee{ display:inline-flex; align-items:center; gap:8px; color:rgba(251,247,239,0.5); font-size:12.5px; margin-top:20px; letter-spacing:.2px; }
 
-  .purple { color: #6C3FC5; }
-  .yellow { color: #F59E0B; }
-  .red { color: #DC2626; }
+  .divider-dot{ width:4px; height:4px; border-radius:50%; background:var(--gold-500); display:inline-block; margin:0 40px; }
+  @media(max-width:600px){ .divider-dot{ display:none; } .section{ padding:60px 20px; } .hero{ padding:64px 16px 56px; } }
 </style>
 </head>
 <body>
 
-<!-- STICKY COUNTDOWN -->
-<div class="timer-bar">
-  🔥 Скидка 34% сгорает через: <span id="countdown">23:59:47</span> <span>— цена вернётся к 1490 ₽</span>
-</div>
-
 <!-- HERO -->
-<section class="hero">
-  <div class="badge">★ Более 800 читателей уже изменили жизнь ★</div>
+<section class="hero grain">
+  <div class="kicker">800+ читателей уже начали этот путь</div>
   <div class="book-mockup">
+    <div class="book-spine-hl"></div>
     <div>
-      <div class="book-star">🧠</div>
-      <div class="book-title">КАК ПОВЫСИТЬ САМООЦЕНКУ И УВЕРЕННОСТЬ В СЕБЕ</div>
+      <div class="book-rule"></div>
+      <div class="book-title">КАК ПОВЫСИТЬ<br>САМООЦЕНКУ И<br>УВЕРЕННОСТЬ В СЕБЕ</div>
       <div class="book-sub">Практический гайд</div>
     </div>
   </div>
-  <h1>Ты устал(а) постоянно<br>сомневаться в себе.<br><span>Пора это изменить.</span></h1>
+  <h1>Ты устал(а) постоянно<br>сомневаться в себе.<br><em>Пора это изменить.</em></h1>
   <p class="hero-sub">7 техник, основанных на нейронауке и психологии — для тех, кто хочет наконец перестать бояться чужой оценки и почувствовать себя достаточным.</p>
 
   <div class="price-block">
-    <div class="price-old">Обычная цена: 1 490 ₽</div>
-    <div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:4px;">
+    <div class="price-old">Обычная цена: 2 990 ₽</div>
+    <div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:2px;">
       <div class="price-new"><sup>₽</sup>990</div>
-      <span class="price-discount">−34%</span>
+      <span class="price-tag">−67%</span>
     </div>
-    <div class="price-why">⏳ Скидка действует только сегодня</div>
+    <div class="price-why">Экономия 2 000 ₽ от полной цены</div>
   </div>
   <br>
-  <a class="cta-btn" href="#">Получить гайд за 990 ₽</a>
-  <div class="cta-sub">🔒 Безопасная оплата · PDF придёт на почту сразу после оплаты</div>
+  <a class="cta-btn" href="#" data-payment-cta>Получить гайд за 990 ₽</a>
+  <div class="cta-sub">Безопасная оплата · PDF придёт на почту сразу после оплаты<br>Нажимая кнопку, вы соглашаетесь с условиями <a href="oferta.html" style="color:rgba(251,247,239,0.6); text-decoration:underline;">публичной оферты</a></div>
 </section>
 
 <!-- SOCIAL PROOF BAR -->
 <div class="social-bar">
-  <div class="social-item">⭐ <strong>4.9</strong> средняя оценка</div>
-  <div class="social-item">👥 <strong>800+</strong> читателей</div>
-  <div class="social-item">📥 <strong>Мгновенное</strong> скачивание</div>
-  <div class="social-item">🕐 <strong>20–30 мин/день</strong> — и всё</div>
+  <div class="social-item"><strong>4.9</strong>средняя оценка</div>
+  <div class="social-item"><strong>800+</strong>читателей</div>
+  <div class="social-item"><strong>Мгновенно</strong>после оплаты</div>
+  <div class="social-item"><strong>20–30 мин</strong>в день</div>
 </div>
 
 <!-- PAIN -->
 <section class="section section-white">
-  <div class="container">
-    <h2>Узнаёшь себя?</h2>
-    <p style="color:#6B7280;font-size:16px;margin-bottom:20px;line-height:1.6;">Если хотя бы 3 пункта из этого списка — про тебя, этот гайд создан именно для тебя:</p>
+  <div class="container reveal">
+    <span class="eyebrow">Знакомо?</span>
+    <h2 class="center">Узнаёшь себя?</h2>
+    <p class="pain-intro" style="text-align:center;">Если хотя бы 3 пункта из этого списка — про тебя, этот гайд создан именно для тебя:</p>
     <ul class="pain-list">
       <li>Ты постоянно сравниваешь себя с другими — и всегда проигрываешь в этом сравнении</li>
       <li>Тебе сложно сказать «нет», ты соглашаешься на всё из страха обидеть или потерять одобрение</li>
@@ -304,27 +345,28 @@
 
 <!-- BEFORE / AFTER -->
 <section class="section section-light">
-  <div class="container">
+  <div class="container reveal">
+    <span class="eyebrow">Что меняется</span>
     <h2 class="center">Жизнь до и после гайда</h2>
     <p class="subtitle">Разница — не магия. Разница — в инструментах.</p>
     <div class="before-after">
       <div class="ba-card ba-before">
-        <div class="ba-label">✗ ДО</div>
-        <div class="ba-item">😰 «Я недостаточно хорош(а)»</div>
-        <div class="ba-item">😶 Молчишь, когда хочешь высказаться</div>
-        <div class="ba-item">😓 Говоришь «да», когда хочешь «нет»</div>
-        <div class="ba-item">😔 Чужое мнение важнее своего</div>
-        <div class="ba-item">😨 Действие парализует страх осуждения</div>
-        <div class="ba-item">😞 Себя — последним в списке приоритетов</div>
+        <div class="ba-label">До</div>
+        <div class="ba-item">«Я недостаточно хорош(а)»</div>
+        <div class="ba-item">Молчишь, когда хочешь высказаться</div>
+        <div class="ba-item">Говоришь «да», когда хочешь «нет»</div>
+        <div class="ba-item">Чужое мнение важнее своего</div>
+        <div class="ba-item">Действие парализует страх осуждения</div>
+        <div class="ba-item">Себя — последним в списке приоритетов</div>
       </div>
       <div class="ba-card ba-after">
-        <div class="ba-label">✓ ПОСЛЕ</div>
-        <div class="ba-item">💪 «Я справляюсь и расту»</div>
-        <div class="ba-item">🗣️ Высказываешь мнение спокойно и уверенно</div>
-        <div class="ba-item">✋ Говоришь «нет» без чувства вины</div>
-        <div class="ba-item">🧭 Опираешься на свои ценности</div>
-        <div class="ba-item">🚀 Действуешь, даже когда страшно</div>
-        <div class="ba-item">❤️ Относишься к себе с уважением</div>
+        <div class="ba-label">После</div>
+        <div class="ba-item">«Я справляюсь и расту»</div>
+        <div class="ba-item">Высказываешь мнение спокойно и уверенно</div>
+        <div class="ba-item">Говоришь «нет» без чувства вины</div>
+        <div class="ba-item">Опираешься на свои ценности</div>
+        <div class="ba-item">Действуешь, даже когда страшно</div>
+        <div class="ba-item">Относишься к себе с уважением</div>
       </div>
     </div>
   </div>
@@ -332,21 +374,22 @@
 
 <!-- MYTH BUSTERS -->
 <section class="section section-white">
-  <div class="container">
+  <div class="container reveal">
+    <span class="eyebrow">Разбор мифов</span>
     <h2 class="center">Почему «просто верь в себя» не работает</h2>
     <p class="subtitle">И что на самом деле меняет самооценку</p>
     <div class="myth-grid">
       <div class="myth-row">
-        <div class="myth-box"><strong>МИФ</strong>Самооценка либо есть, либо нет — с этим рождаются</div>
-        <div class="truth-box"><strong>ПРАВДА</strong>Самооценка — это навык. Его можно развить в любом возрасте через практику</div>
+        <div class="myth-box"><strong>Миф</strong>Самооценка либо есть, либо нет — с этим рождаются</div>
+        <div class="truth-box"><strong>Правда</strong>Самооценка — это навык. Его можно развить в любом возрасте через практику</div>
       </div>
       <div class="myth-row">
-        <div class="myth-box"><strong>МИФ</strong>Аффирмации перед зеркалом — это то, что помогает</div>
-        <div class="truth-box"><strong>ПРАВДА</strong>Если мозг не верит словам — он их отвергает. Нужны доказательства, не декларации</div>
+        <div class="myth-box"><strong>Миф</strong>Аффирмации перед зеркалом — это то, что помогает</div>
+        <div class="truth-box"><strong>Правда</strong>Если мозг не верит словам — он их отвергает. Нужны доказательства, не декларации</div>
       </div>
       <div class="myth-row">
-        <div class="myth-box"><strong>МИФ</strong>Сначала нужно стать лучше, потом полюбить себя</div>
-        <div class="truth-box"><strong>ПРАВДА</strong>Самопринятие — это условие роста, а не его результат. Начни сейчас</div>
+        <div class="myth-box"><strong>Миф</strong>Сначала нужно стать лучше, потом полюбить себя</div>
+        <div class="truth-box"><strong>Правда</strong>Самопринятие — это условие роста, а не его результат. Начни сейчас</div>
       </div>
     </div>
   </div>
@@ -354,33 +397,35 @@
 
 <!-- WHAT'S INSIDE -->
 <section class="section section-light">
-  <div class="container">
+  <div class="container reveal">
+    <span class="eyebrow">Содержание</span>
     <h2 class="center">Что внутри гайда</h2>
     <p class="subtitle">30+ страниц практики. Никакой воды — только то, что реально работает.</p>
     <div class="chapters">
-      <div class="chapter-card"><div class="chap-num">01</div><div><div class="chap-title">Откуда берётся низкая самооценка</div><div class="chap-desc">Поймёшь корни — перестанешь винить себя. Знание причины снимает половину боли.</div></div></div>
-      <div class="chapter-card"><div class="chap-num">02</div><div><div class="chap-title">Техника «Смена голоса»</div><div class="chap-desc">Как остановить внутреннего критика и перестать разрушать себя изнутри.</div><div class="chap-badge">⚡ Упражнение на сегодня</div></div></div>
-      <div class="chapter-card"><div class="chap-num">03</div><div><div class="chap-title">Метод «Дневник побед»</div><div class="chap-desc">Перепрограммируй негативное смещение мозга. Работает уже через 7 дней.</div><div class="chap-badge">⚡ Упражнение на сегодня</div></div></div>
-      <div class="chapter-card"><div class="chap-num">04</div><div><div class="chap-title">Упражнение «Я достаточно»</div><div class="chap-desc">Самопринятие как фундамент — без этого шага всё остальное не работает.</div><div class="chap-badge">⚡ Упражнение на сегодня</div></div></div>
-      <div class="chapter-card"><div class="chap-num">05</div><div><div class="chap-title">Маленькие смелые шаги</div><div class="chap-desc">Уверенность строится через действие — не ожидание «подходящего момента».</div></div></div>
-      <div class="chapter-card"><div class="chap-num">06</div><div><div class="chap-title">Метод «Зеркало»</div><div class="chap-desc">5 минут утром — и отношение к себе начинает меняться. Читатели плачут от этого упражнения (хорошими слезами).</div><div class="chap-badge">⚡ Упражнение на сегодня</div></div></div>
-      <div class="chapter-card"><div class="chap-num">07</div><div><div class="chap-title">Здоровые границы</div><div class="chap-desc">Научишься говорить «нет» без чувства вины — и перестанешь ставить всех выше себя.</div></div></div>
-      <div class="chapter-card"><div class="chap-num">08</div><div><div class="chap-title">21-дневный план действий</div><div class="chap-desc">Пошаговый маршрут: что делать в каждый из 21 дня. Без этого плана техники останутся просто текстом.</div></div></div>
+      <div class="chapter-card"><div class="chap-num">I</div><div><div class="chap-title">Откуда берётся низкая самооценка</div><div class="chap-desc">Поймёшь корни — перестанешь винить себя. Знание причины снимает половину боли.</div></div></div>
+      <div class="chapter-card"><div class="chap-num">II</div><div><div class="chap-title">Техника «Смена голоса»</div><div class="chap-desc">Как остановить внутреннего критика и перестать разрушать себя изнутри.</div><div class="chap-badge">Упражнение на сегодня</div></div></div>
+      <div class="chapter-card"><div class="chap-num">III</div><div><div class="chap-title">Метод «Дневник побед»</div><div class="chap-desc">Перепрограммируй негативное смещение мозга. Работает уже через 7 дней.</div><div class="chap-badge">Упражнение на сегодня</div></div></div>
+      <div class="chapter-card"><div class="chap-num">IV</div><div><div class="chap-title">Упражнение «Я достаточно»</div><div class="chap-desc">Самопринятие как фундамент — без этого шага всё остальное не работает.</div><div class="chap-badge">Упражнение на сегодня</div></div></div>
+      <div class="chapter-card"><div class="chap-num">V</div><div><div class="chap-title">Маленькие смелые шаги</div><div class="chap-desc">Уверенность строится через действие — не ожидание «подходящего момента».</div></div></div>
+      <div class="chapter-card"><div class="chap-num">VI</div><div><div class="chap-title">Метод «Зеркало»</div><div class="chap-desc">5 минут утром — и отношение к себе начинает меняться. Читатели отмечают, что это упражнение трогает глубже остальных.</div><div class="chap-badge">Упражнение на сегодня</div></div></div>
+      <div class="chapter-card"><div class="chap-num">VII</div><div><div class="chap-title">Здоровые границы</div><div class="chap-desc">Научишься говорить «нет» без чувства вины — и перестанешь ставить всех выше себя.</div></div></div>
+      <div class="chapter-card"><div class="chap-num">VIII</div><div><div class="chap-title">21-дневный план действий</div><div class="chap-desc">Пошаговый маршрут: что делать в каждый из 21 дня. Без этого плана техники останутся просто текстом.</div></div></div>
     </div>
   </div>
 </section>
 
 <!-- BONUS -->
 <section class="section section-white">
-  <div class="container">
-    <h2 class="center">Бонус при покупке сегодня</h2>
-    <p class="subtitle">Только для тех, кто оформит заказ до конца акции</p>
+  <div class="container reveal">
+    <span class="eyebrow">Дополнительно</span>
+    <h2 class="center">Бонус при покупке</h2>
+    <p class="subtitle">Идёт в комплекте с гайдом</p>
     <div class="bonus-box">
-      <div class="bonus-icon">🎁</div>
+      <div class="bonus-icon">＋</div>
       <div>
         <div class="bonus-title">Чек-лист «10 фраз, которые убивают самооценку — и чем их заменить»</div>
         <div class="bonus-desc">Узнаешь, какие слова — твои собственные и чужие — разрушают уверенность незаметно. И получишь готовые замены на каждую из них.</div>
-        <div class="bonus-val">Стоимость: <s>490 ₽</s> → <strong>Бесплатно при заказе сегодня</strong></div>
+        <div class="bonus-val">Стоимость отдельно: <s>490 ₽</s> · <strong>входит в комплект</strong></div>
       </div>
     </div>
   </div>
@@ -388,143 +433,142 @@
 
 <!-- FOR WHOM -->
 <section class="section section-light">
-  <div class="container">
+  <div class="container reveal">
+    <span class="eyebrow">Кому подойдёт</span>
     <h2 class="center">Для кого этот гайд</h2>
     <p class="subtitle">Разные жизни — одна боль. Гайд работает для всех.</p>
     <div class="for-grid">
-      <div class="for-card"><div class="for-emoji">👩‍💼</div><div class="for-title">Специалисты и менеджеры</div><div class="for-desc">Боятся высказывать идеи, не верят в свою экспертизу, страдают от синдрома самозванца</div></div>
-      <div class="for-card"><div class="for-emoji">🧑‍🎓</div><div class="for-title">Молодые люди</div><div class="for-desc">Сравнивают себя с блогерами и друзьями, чувствуют, что «все успели, а я нет»</div></div>
-      <div class="for-card"><div class="for-emoji">👩‍👧</div><div class="for-title">Мамы и жёны</div><div class="for-desc">Растворились в заботе о других и забыли, что у них тоже есть потребности и ценность</div></div>
-      <div class="for-card"><div class="for-emoji">🧑‍💻</div><div class="for-title">Фрилансеры</div><div class="for-desc">Боятся называть цену, соглашаются на всё, чувствуют, что недостаточно хороши</div></div>
+      <div class="for-card"><div class="for-title">Специалисты и менеджеры</div><div class="for-desc">Боятся высказывать идеи, не верят в свою экспертизу, страдают от синдрома самозванца</div></div>
+      <div class="for-card"><div class="for-title">Молодые люди</div><div class="for-desc">Сравнивают себя с блогерами и друзьями, чувствуют, что «все успели, а я нет»</div></div>
+      <div class="for-card"><div class="for-title">Мамы и жёны</div><div class="for-desc">Растворились в заботе о других и забыли, что у них тоже есть потребности и ценность</div></div>
+      <div class="for-card"><div class="for-title">Фрилансеры</div><div class="for-desc">Боятся называть цену, соглашаются на всё, чувствуют, что недостаточно хороши</div></div>
     </div>
   </div>
 </section>
 
 <!-- BENEFITS -->
-<section class="section section-dark">
-  <div class="container">
-    <h2 class="center" style="color:white">Что изменится после гайда</h2>
-    <p class="subtitle" style="color:rgba(255,255,255,0.6)">Не обещаем магию — обещаем инструменты, которые работают</p>
+<section class="section section-dark grain">
+  <div class="container reveal">
+    <span class="eyebrow" style="color:var(--gold-400)">Результат</span>
+    <h2 class="center">Что изменится после гайда</h2>
+    <p class="subtitle" style="color:rgba(251,247,239,0.55)">Не обещаем магию — обещаем инструменты, которые работают</p>
     <div class="benefits-grid">
-      <div class="benefit-card"><div class="benefit-icon">🧘</div><div class="benefit-title">Внутренний покой</div><div class="benefit-desc">Меньше тревожных мыслей о чужом мнении и оценке</div></div>
-      <div class="benefit-card"><div class="benefit-icon">🗣️</div><div class="benefit-title">Смелость говорить</div><div class="benefit-desc">Высказываться, не извиняясь за своё мнение</div></div>
-      <div class="benefit-card"><div class="benefit-icon">🚀</div><div class="benefit-title">Действие вместо страха</div><div class="benefit-desc">Делать шаги вперёд, даже когда страшно</div></div>
-      <div class="benefit-card"><div class="benefit-icon">❤️</div><div class="benefit-title">Принятие себя</div><div class="benefit-desc">Перестать войну с собой и наконец начать жить</div></div>
+      <div class="benefit-card"><div class="benefit-title">Внутренний покой</div><div class="benefit-desc">Меньше тревожных мыслей о чужом мнении и оценке</div></div>
+      <div class="benefit-card"><div class="benefit-title">Смелость говорить</div><div class="benefit-desc">Высказываться, не извиняясь за своё мнение</div></div>
+      <div class="benefit-card"><div class="benefit-title">Действие вместо страха</div><div class="benefit-desc">Делать шаги вперёд, даже когда страшно</div></div>
+      <div class="benefit-card"><div class="benefit-title">Принятие себя</div><div class="benefit-desc">Перестать войну с собой и наконец начать жить</div></div>
     </div>
   </div>
 </section>
 
 <!-- REVIEWS -->
 <section class="section section-light">
-  <div class="container">
+  <div class="container reveal">
+    <span class="eyebrow">Отзывы</span>
     <h2 class="center">Что говорят читатели</h2>
     <p class="subtitle">800+ человек уже прошли этот путь</p>
     <div class="reviews">
       <div class="review">
+        <div class="quote-mark">"</div>
         <div class="stars">★★★★★</div>
-        <div class="review-text">«Я 30 лет жила с голосом в голове, который говорил, что я недостаточно хороша. После техники "Смена голоса" этот голос стал тише. Кажется, впервые в жизни я на своей стороне. Это бесценно.»</div>
-        <div class="reviewer"><div class="reviewer-avatar">🌸</div><div><div class="reviewer-name">Анастасия, 34 года</div><div class="reviewer-sub">менеджер, Москва</div></div></div>
+        <div class="review-text">«Я 30 лет жила с голосом в голове, который говорил, что я недостаточно хороша. После техники "Смена голоса" этот голос стал тише. Кажется, впервые в жизни я на своей стороне.»</div>
+        <div class="reviewer"><div class="reviewer-avatar">А</div><div><div class="reviewer-name">Анастасия, 34 года</div><div class="reviewer-sub">менеджер, Москва</div></div></div>
       </div>
       <div class="review">
+        <div class="quote-mark">"</div>
         <div class="stars">★★★★★</div>
-        <div class="review-text">«Дневник побед — это просто. Но это работает. За 2 недели я начал замечать, что я делаю хорошо — а не только то, где облажался. Это меняет всё восприятие себя. Жалею, что не нашёл раньше.»</div>
-        <div class="reviewer"><div class="reviewer-avatar">⚡</div><div><div class="reviewer-name">Дмитрий, 27 лет</div><div class="reviewer-sub">фрилансер, Санкт-Петербург</div></div></div>
+        <div class="review-text">«Дневник побед — это просто. Но это работает. За 2 недели я начал замечать, что я делаю хорошо — а не только то, где облажался. Жалею, что не нашёл раньше.»</div>
+        <div class="reviewer"><div class="reviewer-avatar">Д</div><div><div class="reviewer-name">Дмитрий, 27 лет</div><div class="reviewer-sub">фрилансер, Санкт-Петербург</div></div></div>
       </div>
       <div class="review">
+        <div class="quote-mark">"</div>
         <div class="stars">★★★★★</div>
-        <div class="review-text">«Упражнение с зеркалом было странным первые три дня. На четвёртый я заплакала — хорошими слезами. Поняла, что никогда не говорила себе добрых слов. Рекомендую каждой женщине. Это трансформация.»</div>
-        <div class="reviewer"><div class="reviewer-avatar">🦋</div><div><div class="reviewer-name">Марина, 41 год</div><div class="reviewer-sub">предприниматель, Екатеринбург</div></div></div>
+        <div class="review-text">«Упражнение с зеркалом было странным первые три дня. На четвёртый я поняла, что никогда не говорила себе добрых слов. Рекомендую каждой женщине.»</div>
+        <div class="reviewer"><div class="reviewer-avatar">М</div><div><div class="reviewer-name">Марина, 41 год</div><div class="reviewer-sub">предприниматель, Екатеринбург</div></div></div>
       </div>
       <div class="review">
+        <div class="quote-mark">"</div>
         <div class="stars">★★★★★</div>
-        <div class="review-text">«Синдром самозванца меня преследовал годами. После главы про маленькие смелые шаги я стал делать то, что откладывал месяцами. Уже за первую неделю — три новых клиента. Совпадение? Не думаю.»</div>
-        <div class="reviewer"><div class="reviewer-avatar">🎯</div><div><div class="reviewer-name">Артём, 31 год</div><div class="reviewer-sub">дизайнер, Новосибирск</div></div></div>
+        <div class="review-text">«Синдром самозванца меня преследовал годами. После главы про маленькие смелые шаги я стал делать то, что откладывал месяцами. Уже за первую неделю — три новых клиента.»</div>
+        <div class="reviewer"><div class="reviewer-avatar">А</div><div><div class="reviewer-name">Артём, 31 год</div><div class="reviewer-sub">дизайнер, Новосибирск</div></div></div>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- URGENCY -->
-<section class="section section-white">
-  <div class="container">
-    <div class="urgency-box">
-      <h3>⏰ Скидка действует только сегодня</h3>
-      <p>Цена 990 ₽ вместо 1490 ₽ — это специальная акция запуска. После окончания таймера цена вернётся к стандартной. Бонусный чек-лист (стоимостью 490 ₽) тоже исчезнет из комплекта.</p>
     </div>
   </div>
 </section>
 
 <!-- FAQ -->
 <section class="section section-light">
-  <div class="container">
+  <div class="container reveal">
+    <span class="eyebrow">Вопросы</span>
     <h2 class="center">Частые вопросы</h2>
     <br>
     <div class="faq">
-      <div class="faq-item"><div class="faq-q">Как я получу гайд?</div><div class="faq-a">Сразу после оплаты на твою почту придёт письмо со ссылкой на скачивание PDF. Это займёт меньше минуты. Никаких ожиданий.</div></div>
+      <div class="faq-item"><div class="faq-q">Как я получу гайд?</div><div class="faq-a">Сразу после оплаты на твою почту придёт письмо со ссылкой на скачивание PDF. Это займёт меньше минуты.</div></div>
       <div class="faq-item"><div class="faq-q">Нужно ли специальное образование или подготовка?</div><div class="faq-a">Нет. Гайд написан простым языком без психологического жаргона. Всё что нужно — желание измениться и 20–30 минут в день.</div></div>
       <div class="faq-item"><div class="faq-q">Через сколько я увижу результат?</div><div class="faq-a">Первые сдвиги — уже в первую неделю. Читатели отмечают изменения после первых двух упражнений. Устойчивые изменения — по результатам 21-дневного плана.</div></div>
-      <div class="faq-item"><div class="faq-q">Почему так дёшево — это серьёзно?</div><div class="faq-a">Это акция запуска. Цель — собрать отзывы и помочь как можно большему числу людей. После акции цена вернётся к 1490 ₽. Сейчас — самое выгодное время.</div></div>
+      <div class="faq-item"><div class="faq-q">Почему сейчас цена ниже обычной?</div><div class="faq-a">990 ₽ — действующая цена со скидкой 67% от полной стоимости 2 990 ₽. Итоговая сумма всегда указана на странице оплаты до подтверждения покупки.</div></div>
       <div class="faq-item"><div class="faq-q">Это поможет, если у меня глубокая травма?</div><div class="faq-a">Гайд — это практический инструмент, не замена терапии. При серьёзных психологических трудностях рекомендуем работать со специалистом параллельно. Для большинства людей с «бытовой» низкой самооценкой — работает отлично.</div></div>
     </div>
   </div>
 </section>
 
 <!-- CTA FINAL -->
-<section class="cta-final">
-  <div class="container">
+<section class="cta-final grain">
+  <div class="container reveal">
     <h2>Всё что тебе нужно —<br>уже внутри тебя.</h2>
-    <p>Этот гайд поможет это увидеть.<br>Сделай один шаг прямо сейчас — завтра будет другой человек.</p>
+    <p>Этот гайд поможет это увидеть.<br>Сделай один шаг прямо сейчас.</p>
 
     <div class="price-final-block">
-      <div class="pf-what">Что ты получаешь:</div>
+      <div class="pf-what">Что ты получаешь</div>
       <div class="pf-line"><span>PDF-гайд (30+ страниц, 7 техник)</span><strong>990 ₽</strong></div>
       <div class="pf-line"><span>21-дневный план действий</span><strong>включён</strong></div>
-      <div class="pf-line"><span>🎁 Бонус: Чек-лист «10 фраз»</span><strong style="color:#FCD34D">бесплатно</strong></div>
+      <div class="pf-line"><span>Бонус: чек-лист «10 фраз»</span><strong style="color:var(--gold-400)">без доплаты</strong></div>
       <div class="pf-total">
-        <span class="pf-total-label">Итого:</span>
-        <span><span class="pf-total-price">990 ₽</span><span class="pf-total-old">1 980 ₽</span></span>
+        <span class="pf-total-label">Итого</span>
+        <span><span class="pf-total-price">990 ₽</span><span class="pf-total-old">3 480 ₽</span></span>
       </div>
     </div>
     <br>
-    <a class="cta-btn" href="#">Забрать гайд + бонус за 990 ₽</a>
+    <a class="cta-btn" href="#" data-payment-cta>Забрать гайд + бонус за 990 ₽</a>
     <br>
-    <div class="guarantee">🔒 Безопасная оплата &nbsp;·&nbsp; Скачивание сразу &nbsp;·&nbsp; PDF на любом устройстве</div>
+    <div class="guarantee">Безопасная оплата &nbsp;·&nbsp; Скачивание сразу &nbsp;·&nbsp; PDF на любом устройстве</div>
+    <div style="margin-top:14px;"><a href="oferta.html" style="color:rgba(251,247,239,0.45); font-size:12px; text-decoration:underline;">Публичная оферта</a></div>
   </div>
 </section>
 
 <!-- FOOTER -->
-<footer style="background:#0F0A1E; border-top: 1px solid rgba(255,255,255,0.08); padding: 28px 20px; text-align: center;">
-  <div style="max-width:760px; margin:0 auto; color:rgba(255,255,255,0.4); font-size:13px; line-height:2;">
-    <div>ИП Лимачко Дмитрий Юрьевич &nbsp;·&nbsp; г. Новосибирск</div>
-    <div>ОГРНИП: 325547600123645</div>
-    <div>+7 952 901-60-39 &nbsp;·&nbsp; <a href="mailto:am.limachko@mail.ru" style="color:rgba(255,255,255,0.4); text-decoration:none;">am.limachko@mail.ru</a></div>
+<footer style="background:var(--plum-900); border-top:1px solid var(--line-dark); padding:30px 20px; text-align:center;">
+  <div style="max-width:740px; margin:0 auto; color:rgba(251,247,239,0.4); font-size:12.5px; line-height:2;">
+    <div><a href="oferta.html" style="color:rgba(251,247,239,0.5); text-decoration:underline;">Публичная оферта</a></div>
   </div>
 </footer>
 
 <script>
-  // Countdown timer
-  function updateCountdown() {
-    const saved = localStorage.getItem('saleEnd');
-    let end;
-    if (saved) {
-      end = parseInt(saved);
-    } else {
-      end = Date.now() + 24 * 60 * 60 * 1000;
-      localStorage.setItem('saleEnd', end);
+  // ↓ Вставьте ссылку на оплату (Prodamus, ЮKassa, GetCourse и т.д.)
+  const PAYMENT_URL = '';
+
+  document.querySelectorAll('[data-payment-cta]').forEach(function (btn) {
+    if (PAYMENT_URL) {
+      btn.href = PAYMENT_URL;
+      btn.target = '_blank';
+      btn.rel = 'noopener noreferrer';
     }
-    const el = document.getElementById('countdown');
-    function tick() {
-      const diff = end - Date.now();
-      if (diff <= 0) { el.textContent = '00:00:00'; return; }
-      const h = Math.floor(diff / 3600000);
-      const m = Math.floor((diff % 3600000) / 60000);
-      const s = Math.floor((diff % 60000) / 1000);
-      el.textContent = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
-    }
-    tick();
-    setInterval(tick, 1000);
+  });
+
+  // Плавное появление секций при скролле
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+  } else {
+    document.querySelectorAll('.reveal').forEach((el) => el.classList.add('is-visible'));
   }
-  updateCountdown();
 </script>
 </body>
 </html>
