@@ -141,6 +141,7 @@
   .cta-btn:hover{ color:#241530; }
   .cta-btn:hover::before{ transform:scaleX(1); }
   .cta-sub{ color:rgba(251,247,239,0.42); font-size:12px; margin-top:16px; letter-spacing:.3px; }
+  .robokassa-widget{ display:inline-block; margin:4px 0; }
 
   /* SOCIAL PROOF BAR */
   .social-bar{
@@ -312,7 +313,9 @@
     <div class="price-why">Экономия 2 000 ₽ от полной цены</div>
   </div>
   <br>
-  <a class="cta-btn" href="#" data-payment-cta>Получить гайд за 990 ₽</a>
+  <div class="robokassa-widget">
+    <script type="text/javascript" src="https://auth.robokassa.ru/Merchant/PaymentForm/FormV.js?EncodedInvoiceId=3aRz_tsJcUK23gl61OMxhw"></script>
+  </div>
   <div class="cta-sub">Безопасная оплата · PDF придёт на почту сразу после оплаты<br>Нажимая кнопку, вы соглашаетесь с условиями <a href="oferta.html" style="color:rgba(251,247,239,0.6); text-decoration:underline;">публичной оферты</a></div>
 </section>
 
@@ -529,7 +532,9 @@
       </div>
     </div>
     <br>
-    <a class="cta-btn" href="#" data-payment-cta>Забрать гайд + бонус за 990 ₽</a>
+    <div class="robokassa-widget">
+      <script type="text/javascript" src="https://auth.robokassa.ru/Merchant/PaymentForm/FormV.js?EncodedInvoiceId=3aRz_tsJcUK23gl61OMxhw"></script>
+    </div>
     <br>
     <div class="guarantee">Безопасная оплата &nbsp;·&nbsp; Скачивание сразу &nbsp;·&nbsp; PDF на любом устройстве</div>
     <div style="margin-top:14px;"><a href="oferta.html" style="color:rgba(251,247,239,0.45); font-size:12px; text-decoration:underline;">Публичная оферта</a></div>
@@ -544,17 +549,6 @@
 </footer>
 
 <script>
-  // ↓ Вставьте ссылку на оплату (Prodamus, ЮKassa, GetCourse и т.д.)
-  const PAYMENT_URL = '';
-
-  document.querySelectorAll('[data-payment-cta]').forEach(function (btn) {
-    if (PAYMENT_URL) {
-      btn.href = PAYMENT_URL;
-      btn.target = '_blank';
-      btn.rel = 'noopener noreferrer';
-    }
-  });
-
   // Плавное появление секций при скролле
   if ('IntersectionObserver' in window) {
     const observer = new IntersectionObserver((entries) => {
