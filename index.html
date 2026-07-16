@@ -326,10 +326,9 @@
   <br>
   <div class="email-gate" id="emailGate1">
     <input type="email" class="email-input" id="emailInput1" placeholder="Ваш email — куда прислать гайд" required>
-    <button class="cta-btn" onclick="startPayment('emailInput1','widgetContainer1','emailGate1')">Получить гайд за 990 ₽</button>
+    <button class="cta-btn" onclick="startPayment('emailInput1')">Получить гайд за 990 ₽</button>
     <div class="email-hint">На эту почту придёт PDF сразу после оплаты</div>
   </div>
-  <div class="robokassa-widget" id="widgetContainer1" style="display:none;"></div>
   <div class="cta-sub">Безопасная оплата · PDF придёт на почту сразу после оплаты<br>Нажимая кнопку, вы соглашаетесь с условиями <a href="oferta.html" style="color:rgba(251,247,239,0.6); text-decoration:underline;">публичной оферты</a></div>
 </section>
 
@@ -548,10 +547,9 @@
     <br>
     <div class="email-gate" id="emailGate2">
       <input type="email" class="email-input" id="emailInput2" placeholder="Ваш email — куда прислать гайд" required>
-      <button class="cta-btn" onclick="startPayment('emailInput2','widgetContainer2','emailGate2')">Забрать гайд + бонус за 990 ₽</button>
+      <button class="cta-btn" onclick="startPayment('emailInput2')">Забрать гайд + бонус за 990 ₽</button>
       <div class="email-hint">На эту почту придёт PDF сразу после оплаты</div>
     </div>
-    <div class="robokassa-widget" id="widgetContainer2" style="display:none;"></div>
     <br>
     <div class="guarantee">Безопасная оплата &nbsp;·&nbsp; Скачивание сразу &nbsp;·&nbsp; PDF на любом устройстве</div>
     <div style="margin-top:14px;"><a href="oferta.html" style="color:rgba(251,247,239,0.45); font-size:12px; text-decoration:underline;">Публичная оферта</a></div>
@@ -566,7 +564,7 @@
 </footer>
 
 <script>
-  function startPayment(inputId, widgetId, gateId) {
+  function startPayment(inputId) {
     var input = document.getElementById(inputId);
     var email = input.value.trim();
     var isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -577,15 +575,7 @@
       return;
     }
 
-    var gate = document.getElementById(gateId);
-    var widget = document.getElementById(widgetId);
-    gate.style.display = 'none';
-    widget.style.display = 'block';
-
-    var script = document.createElement('script');
-    script.type = 'text/javascript';
-    script.src = 'https://auth.robokassa.ru/Merchant/PaymentForm/FormV.js?EncodedInvoiceId=3aRz_tsJcUK23gl61OMxhw&Email=' + encodeURIComponent(email);
-    widget.appendChild(script);
+    window.location.href = 'pay.html?email=' + encodeURIComponent(email);
   }
 
   // Плавное появление секций при скролле
