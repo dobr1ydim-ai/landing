@@ -6,7 +6,7 @@
 <title>Как повысить самооценку — Практический гайд</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..40,500;9..40,600;9..40,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
     --ink:#241729;
@@ -42,13 +42,7 @@
     .reveal.is-visible{ opacity:1; transform:translateY(0); }
   }
 
-  /* fine paper/velvet grain, used on dark + hero surfaces */
-  .grain{ position:relative; isolation:isolate; }
-  .grain::after{
-    content:''; position:absolute; inset:0; pointer-events:none; z-index:1;
-    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
-    opacity:.05; mix-blend-mode:overlay;
-  }
+  /* grain removed for performance — feTurbulence filters are too heavy on mobile */
 
   /* HERO */
   .hero{
@@ -291,7 +285,7 @@
 <body>
 
 <!-- HERO -->
-<section class="hero grain">
+<section class="hero">
   <div class="kicker">800+ читателей уже начали этот путь</div>
   <div class="book-mockup">
     <div class="book-spine-hl"></div>
@@ -450,7 +444,7 @@
 </section>
 
 <!-- BENEFITS -->
-<section class="section section-dark grain">
+<section class="section section-dark">
   <div class="container reveal">
     <span class="eyebrow" style="color:var(--gold-400)">Результат</span>
     <h2 class="center">Что изменится после гайда</h2>
@@ -516,7 +510,7 @@
 </section>
 
 <!-- CTA FINAL -->
-<section class="cta-final grain">
+<section class="cta-final">
   <div class="container reveal">
     <h2>Всё что тебе нужно —<br>уже внутри тебя.</h2>
     <p>Этот гайд поможет это увидеть.<br>Сделай один шаг прямо сейчас.</p>
