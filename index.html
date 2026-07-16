@@ -143,17 +143,6 @@
   .cta-sub{ color:rgba(251,247,239,0.42); font-size:12px; margin-top:16px; letter-spacing:.3px; }
   .robokassa-widget{ display:inline-block; margin:4px 0; }
 
-  .email-gate{ display:flex; flex-direction:column; align-items:center; gap:14px; }
-  .email-input{
-    width:100%; max-width:320px; padding:15px 18px; font-size:14.5px;
-    background:rgba(255,255,255,0.04); border:1px solid rgba(251,247,239,0.25);
-    border-radius:2px; color:#FBF7EF; font-family:'Inter'; text-align:center;
-    transition:border-color .25s ease;
-  }
-  .email-input::placeholder{ color:rgba(251,247,239,0.4); }
-  .email-input:focus{ outline:none; border-color:var(--gold-400); }
-  .email-hint{ color:rgba(251,247,239,0.4); font-size:12px; }
-
   /* SOCIAL PROOF BAR */
   .social-bar{
     background:var(--paper);
@@ -324,10 +313,8 @@
     <div class="price-why">Экономия 2 000 ₽ от полной цены</div>
   </div>
   <br>
-  <div class="email-gate" id="emailGate1">
-    <input type="email" class="email-input" id="emailInput1" placeholder="Ваш email — куда прислать гайд" required>
-    <button class="cta-btn" onclick="startPayment('emailInput1')">Получить гайд за 990 ₽</button>
-    <div class="email-hint">На эту почту придёт PDF сразу после оплаты</div>
+  <div class="robokassa-widget">
+    <script type="text/javascript" src="https://auth.robokassa.ru/Merchant/PaymentForm/FormV.js?EncodedInvoiceId=3aRz_tsJcUK23gl61OMxhw"></script>
   </div>
   <div class="cta-sub">Безопасная оплата · PDF придёт на почту сразу после оплаты<br>Нажимая кнопку, вы соглашаетесь с условиями <a href="oferta.html" style="color:rgba(251,247,239,0.6); text-decoration:underline;">публичной оферты</a></div>
 </section>
@@ -545,10 +532,8 @@
       </div>
     </div>
     <br>
-    <div class="email-gate" id="emailGate2">
-      <input type="email" class="email-input" id="emailInput2" placeholder="Ваш email — куда прислать гайд" required>
-      <button class="cta-btn" onclick="startPayment('emailInput2')">Забрать гайд + бонус за 990 ₽</button>
-      <div class="email-hint">На эту почту придёт PDF сразу после оплаты</div>
+    <div class="robokassa-widget">
+      <script type="text/javascript" src="https://auth.robokassa.ru/Merchant/PaymentForm/FormV.js?EncodedInvoiceId=3aRz_tsJcUK23gl61OMxhw"></script>
     </div>
     <br>
     <div class="guarantee">Безопасная оплата &nbsp;·&nbsp; Скачивание сразу &nbsp;·&nbsp; PDF на любом устройстве</div>
@@ -564,20 +549,6 @@
 </footer>
 
 <script>
-  function startPayment(inputId) {
-    var input = document.getElementById(inputId);
-    var email = input.value.trim();
-    var isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-
-    if (!isValid) {
-      input.style.borderColor = '#C97A5A';
-      input.focus();
-      return;
-    }
-
-    window.location.href = 'pay.html?email=' + encodeURIComponent(email);
-  }
-
   // Плавное появление секций при скролле
   if ('IntersectionObserver' in window) {
     const observer = new IntersectionObserver((entries) => {
